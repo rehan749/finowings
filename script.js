@@ -184,6 +184,129 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ----------------------------------------------------
+  // 3B. Responsive Testimonials Multi-Card Slider
+  //     (Desktop: 3 visible, Tablet: 2 visible, Mobile: 1 visible)
+  // ----------------------------------------------------
+  const testimonialsTrack = document.getElementById('testimonialsTrack');
+  const testimonialsPrev = document.getElementById('testimonialsPrev');
+  const testimonialsNext = document.getElementById('testimonialsNext');
+  const testimonialsDotsWrap = document.getElementById('testimonialsDots');
+
+  if (testimonialsTrack && testimonialsTrack.children.length > 0) {
+    const cards = Array.from(testimonialsTrack.children);
+    let currentIndex = 0;
+    let timer = null;
+
+    function getVisibleCount() {
+      if (window.innerWidth <= 680) return 1;
+      if (window.innerWidth <= 1120) return 2;
+      return 3;
+    }
+
+    function getMaxIndex() {
+      return Math.max(0, cards.length - getVisibleCount());
+    }
+
+    function buildDots() {
+      if (!testimonialsDotsWrap) return;
+      const totalSteps = getMaxIndex() + 1;
+      testimonialsDotsWrap.innerHTML = '';
+
+      for (let i = 0; i < totalSteps; i++) {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'testimonial-dot' + (i === currentIndex ? ' active' : '');
+        dot.setAttribute('aria-label', `Show testimonial slide ${i + 1}`);
+        dot.addEventListener('click', () => {
+          goToSlide(i);
+          startTimer();
+        });
+        testimonialsDotsWrap.appendChild(dot);
+      }
+    }
+
+    function updatePosition() {
+      const firstCard = cards[0];
+      if (!firstCard) return;
+      const gap = parseFloat(getComputedStyle(testimonialsTrack).gap) || 0;
+      const stepPx = firstCard.getBoundingClientRect().width + gap;
+      testimonialsTrack.style.transform = `translateX(-${currentIndex * stepPx}px)`;
+
+      if (testimonialsDotsWrap) {
+        testimonialsDotsWrap.querySelectorAll('.testimonial-dot').forEach((dot, i) => {
+          dot.classList.toggle('active', i === currentIndex);
+        });
+      }
+    }
+
+    function goToSlide(index) {
+      const maxIdx = getMaxIndex();
+      if (index < 0) index = maxIdx;
+      if (index > maxIdx) index = 0;
+      currentIndex = index;
+      updatePosition();
+    }
+
+    function startTimer() {
+      stopTimer();
+      timer = setInterval(() => {
+        goToSlide(currentIndex + 1);
+      }, 4800);
+    }
+
+    function stopTimer() {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+    }
+
+    if (testimonialsPrev) {
+      testimonialsPrev.addEventListener('click', () => {
+        goToSlide(currentIndex - 1);
+        startTimer();
+      });
+    }
+
+    if (testimonialsNext) {
+      testimonialsNext.addEventListener('click', () => {
+        goToSlide(currentIndex + 1);
+        startTimer();
+      });
+    }
+
+    const sliderOuter = testimonialsTrack.closest('.testimonials-slider-outer');
+    if (sliderOuter) {
+      sliderOuter.addEventListener('mouseenter', stopTimer);
+      sliderOuter.addEventListener('mouseleave', startTimer);
+    }
+
+    let swipeStartX = 0;
+    testimonialsTrack.addEventListener('touchstart', (e) => {
+      swipeStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    testimonialsTrack.addEventListener('touchend', (e) => {
+      const delta = swipeStartX - e.changedTouches[0].screenX;
+      if (Math.abs(delta) > 40) {
+        goToSlide(delta > 0 ? currentIndex + 1 : currentIndex - 1);
+        startTimer();
+      }
+    }, { passive: true });
+
+    window.addEventListener('resize', () => {
+      const maxIdx = getMaxIndex();
+      if (currentIndex > maxIdx) currentIndex = maxIdx;
+      buildDots();
+      updatePosition();
+    });
+
+    buildDots();
+    updatePosition();
+    startTimer();
+  }
+
+  // ----------------------------------------------------
   // 4. Smooth Animated Counters (Stats Ribbon)
   // ----------------------------------------------------
   const statElements = document.querySelectorAll('.stat-digit');
