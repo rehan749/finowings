@@ -108,7 +108,18 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
+/* Disable text selection */
+body {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
 
+/* Disable image dragging */
+img {
+    -webkit-user-drag: none;
+    pointer-events: none;
+}
 a {
   text-decoration: none;
   color: inherit;

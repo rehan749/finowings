@@ -293,3 +293,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+// Disable right click
+document.addEventListener("contextmenu", function(e) {
+    e.preventDefault();
+});
+
+// Disable common keyboard shortcuts
+document.addEventListener("keydown", function(e) {
+
+    if (
+        e.key === "F12" ||
+        (e.ctrlKey && e.key.toLowerCase() === "u") ||
+        (e.ctrlKey && e.shiftKey && ["i", "j", "c"].includes(e.key.toLowerCase()))
+    ) {
+        e.preventDefault();
+    }
+
+});
