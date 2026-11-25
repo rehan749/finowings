@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
    * Initializes an interactive slider with controls, indicator buttons, autoplay, and swipe support.
    */
   function initCarousel({ track, prevBtn, nextBtn, indicators, intervalMs = 5500 }) {
-    const totalSlides = indicators ? indicators.length : (track ? track.children.length : 0);
+    const totalSlides = track ? track.children.length : 0;
     if (!track || totalSlides === 0) return;
 
     let currentSlide = 0;
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
       currentSlide = index;
       track.style.transform = `translateX(-${currentSlide * 100}%)`;
 
-      if (indicators) {
+      if (indicators && indicators.length > 0) {
         indicators.forEach((dot, i) => {
           dot.classList.toggle('active', i === currentSlide);
         });
