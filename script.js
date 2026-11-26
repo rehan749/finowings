@@ -415,6 +415,38 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
+
+  // ----------------------------------------------------
+  // 8. Clean YouTube Facade Thumbnails (Click-to-Play)
+  // ----------------------------------------------------
+  document.querySelectorAll('.video-facade-btn').forEach(btn => {
+    const videoId = btn.getAttribute('data-video-id');
+    const thumbImg = btn.querySelector('img');
+
+    if (thumbImg && videoId) {
+      const fallbackUrl = `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`;
+      thumbImg.addEventListener('error', () => {
+        if (thumbImg.src !== fallbackUrl) thumbImg.src = fallbackUrl;
+      });
+      thumbImg.addEventListener('load', () => {
+        // YouTube returns a 120x90 placeholder if maxresdefault is unavailable
+        if (thumbImg.naturalWidth <= 120 && thumbImg.src !== fallbackUrl) {
+          thumbImg.src = fallbackUrl;
+        }
+      });
+    }
+
+    btn.addEventListener('click', () => {
+      if (!videoId || !btn.parentElement) return;
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+      iframe.title = btn.getAttribute('data-video-title') || 'YouTube video player';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+      iframe.allowFullscreen = true;
+      btn.parentElement.replaceChild(iframe, btn);
+    });
+  });
 });
 
 // Disable right click
