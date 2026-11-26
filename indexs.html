@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>503 - Service Unavailable</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f6f8;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .error-container {
+            width: 100%;
+            max-width: 650px;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 45px 35px;
+            text-align: center;
+        }
+
+        .error-icon {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 22px;
+            border-radius: 50%;
+            background: #fff3f0;
+            color: #d9534f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .error-code {
+            font-size: 13px;
+            color: #d9534f;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            font-size: 27px;
+            font-weight: 600;
+            color: #222;
+            margin-bottom: 15px;
+        }
+
+        .description {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #666;
+            max-width: 490px;
+            margin: 0 auto 25px;
+        }
+
+        .info-box {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            padding: 16px;
+            border-radius: 4px;
+            text-align: left;
+            margin-bottom: 25px;
+        }
+
+        .info-box p {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .info-box strong {
+            color: #444;
+        }
+
+        .error-details {
+            font-size: 12px;
+            color: #999;
+            margin-top: 20px;
+        }
+
+        .footer {
+            border-top: 1px solid #eee;
+            margin-top: 30px;
+            padding-top: 20px;
+            font-size: 12px;
+            color: #999;
+        }
+
+        @media (max-width: 480px) {
+            .error-container {
+                padding: 35px 20px;
+            }
+
+            h1 {
+                font-size: 23px;
+            }
+
+            .description {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="error-container">
+
+        <div class="error-icon">!</div>
+
+        <div class="error-code">ERROR 503</div>
+
+        <h1>Service Temporarily Unavailable</h1>
+
+        <p class="description">
+            We're sorry, but the server is currently unable to handle
+            your request. This may be due to temporary maintenance
+            or server overload.
+        </p>
+
+        <div class="info-box">
+            <p><strong>What happened?</strong></p>
+            <p>
+                The server is temporarily unavailable and cannot
+                process your request at this moment.
+            </p>
+
+            <p style="margin-top: 10px;">
+                <strong>What can I do?</strong>
+            </p>
+            <p>
+                Please try accessing this website again after some time.
+                We apologize for the inconvenience.
+            </p>
+        </div>
+
+        <div class="error-details">
+            HTTP ERROR 503 | Service Unavailable
+        </div>
+
+        <div class="footer">
+            Server Error Page
+        </div>
+
+    </div>
+
+</body>
+</html>
